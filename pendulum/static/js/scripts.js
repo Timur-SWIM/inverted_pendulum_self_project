@@ -1,3 +1,10 @@
+const myInput = document.getElementById('myInput');
+const myModal = document.getElementById('modal');
+
+myModal.addEventListener('shown.bs.modal', () => {
+  myInput.focus()
+});
+
 function solveEquation(k, g, l, a, w, t) {
     const dt = 0.01;
     const numSteps = 1000;
