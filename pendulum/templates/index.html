@@ -38,7 +38,7 @@
                         Новый график
                     </button>
 
-                    <button class="btn bg-body-tertiary mx-2">
+                    <button class="btn bg-body-tertiary mx-2" onclick="downloadGraph()">
                         Экспорт графика
                     </button>
                     
@@ -102,7 +102,7 @@
                     <form action="">
                         <div class="row mb-3">
                             <div class="col-6 me-1">
-                                <input class="form-control " type="text" placeholder="Коэффициент k">
+                                <input class="form-control" id="k" type="text" placeholder="Коэффициент k">
                             </div>
                             <div class="col">
                                 <select class="form-select" aria-label="Default select example">
@@ -116,26 +116,26 @@
 
                         <div class="row mb-3">
                             <div class="col-6 me-1">
-                                <input class="form-control" type="text" placeholder="Длина стержня L">
+                                <input class="form-control" type="text" id="l" placeholder="Длина стержня L">
                             </div>
                             <div class="col">
-                                <input class="form-control" type="text" placeholder="Амплитуда A">
+                                <input class="form-control" type="text" id="A" placeholder="Амплитуда A">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-6 me-1">
-                                <input class="form-control" type="text" placeholder="Угловая частота ω">
+                                <input class="form-control" type="text" id="w" placeholder="Угловая частота ω">
                             </div>
                             <div class="col">
-                                <input class="form-control" type="text" placeholder="Время моделирования t">
+                                <input class="form-control" type="text" id="t" placeholder="Время моделирования t">
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                    <button type="button" class="btn btn-primary">Построить</button>
+                    <button type="button" class="btn btn-primary" onclick="getDataAndPassToScript()">Построить</button>
                 </div>
             </div>
         </div>
