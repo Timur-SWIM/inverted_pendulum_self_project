@@ -26,6 +26,9 @@ function getDataAndPassToScript() {
   var w = document.getElementById("w").value; // частота
   var t = document.getElementById("t").value; // время
 
+  // обновление значений
+  addToTable(k, g, l, a, w, t)
+
   k = parseFloat(k)
   l = parseFloat(l)
   a = parseFloat(a)
@@ -106,4 +109,45 @@ function downloadGraph() {
       // Удаление ссылки из документа
       document.body.removeChild(link);
   });
+}
+
+// script.js
+
+function addToTable(k, g, l, a, w, t) {
+  console.log("func work")
+  // Get the table body
+  var tableBody = document.getElementById("tableBody");
+  var tableBodyMain = document.getElementById("tableBodyMain");
+  
+
+  // Clear existing rows in the table body
+  tableBody.innerHTML = "";
+  tableBodyMain.innerHTML = "";
+
+  // Add new rows to the table body with user-entered values
+  addRow(tableBody, "k", k);
+  addRow(tableBody, "g", g);
+  addRow(tableBody, "L", l);
+  addRow(tableBody, "A", a);
+  addRow(tableBody, "ω", w);
+  addRow(tableBody, "t", t);
+
+  addRow(tableBodyMain, "k", k);
+  addRow(tableBodyMain, "g", g);
+  addRow(tableBodyMain, "L", l);
+  addRow(tableBodyMain, "A", a);
+  addRow(tableBodyMain, "ω", w);
+  addRow(tableBodyMain, "t", t);
+  // Add rows for other parameters as needed
+}
+
+// Function to add a row to the table
+function addRow(tableBody, parameter, value) {
+  var newRow = tableBody.insertRow(tableBody.rows.length);
+  
+  var cellParameter = newRow.insertCell(0);
+  cellParameter.textContent = parameter;
+
+  var cellValue = newRow.insertCell(1);
+  cellValue.textContent = value;
 }
