@@ -34,7 +34,7 @@ function getDataAndPassToScript() {
 
   buildGraph(anglesOfDeflection); 
 
-  animate(k, g, l, a, w, t);
+  //animate(k, g, l, a, w, t);
   
   k = parseFloat(k);
   l = parseFloat(l);
@@ -140,7 +140,6 @@ function addToTable(k, g, l, a, w, t) {
   addRow(tableBodyMain, "t", t);
   // Add rows for other parameters as needed
 }
-
 // Function to add a row to the table
 function addRow(tableBody, parameter, value) {
   var newRow = tableBody.insertRow(tableBody.rows.length);
@@ -154,6 +153,13 @@ function addRow(tableBody, parameter, value) {
 
 const canvas = document.getElementById("pendulumCanvas");
 const ctx = canvas.getContext("2d");
+
+const k = 0.5; // коэффициент трения
+const g = 9.8; // ускорение свободного падения
+const l = 1; // длина маятника
+const a = 10; // частота осцилляций
+const w = 50; // частота
+const t = 10; // время
 
 const pendulum = {
   originX: canvas.width / 2,
@@ -173,7 +179,7 @@ const pendulum = {
       if (i > 998) {
           this.counter = 1;
       }
-
+      console.log(g);
       const d2fdt2 = -2 * k * dfdt - (g / l - a * w * w * Math.cos(w * i * dt) / l) * Math.sin(f);
       dfdt += d2fdt2 * dt;
       f += dfdt * dt;
@@ -216,8 +222,11 @@ const pendulum = {
   }
 };
 
-function animate(k, g, l, a, w, t) {
+function animate() {
   pendulum.update(k, g, l, a, w, t);
   pendulum.draw();
   requestAnimationFrame(animate);
 }
+
+animate()
+
