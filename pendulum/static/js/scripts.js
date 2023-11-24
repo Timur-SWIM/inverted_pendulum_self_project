@@ -1,13 +1,6 @@
-const myInput = document.getElementById('myInput');
-const myModal = document.getElementById('modal');
-
-myModal.addEventListener('shown.bs.modal', () => {
-  myInput.focus()
-});
-
 function solveEquation(k, g, l, a, w, t) {
   const dt = 0.01;
-  const numSteps = 1000;
+  const numSteps = 100 * t;
 
   let f = 0.01;
   let dfdt = 0;
@@ -26,12 +19,12 @@ function solveEquation(k, g, l, a, w, t) {
 }
 
 function getDataAndPassToScript() {
-  var k = document.getElementById("k").value; // коэффициент трения
-  var g = document.getElementById("g").value; // ускорение свободного падения
-  var l = document.getElementById("l").value; // длина маятника
-  var a = document.getElementById("A").value; // частота осцилляций
-  var w = document.getElementById("w").value; // частота
-  var t = document.getElementById("t").value; // время
+  const k = document.getElementById("k").value; // коэффициент трения
+  const g = document.getElementById("g").value; // ускорение свободного падения
+  const l = document.getElementById("l").value; // длина маятника
+  const a = document.getElementById("a").value; // частота осцилляций
+  const w = document.getElementById("w").value; // частота
+  const t = document.getElementById("t").value; // время
 
   // обновление значений
   addToTable(k, g, l, a, w, t);
@@ -41,7 +34,75 @@ function getDataAndPassToScript() {
 
   buildGraph(anglesOfDeflection); 
 
-  animate(k, g, l, a, w, t);
+  const canvas = document.getElementById("pendulumCanvas");
+  const ctx = canvas.getContext("2d");
+
+// const k = 0.5; // коэффициент трения
+// const g = 9.8; // ускорение свободного падения
+// const l = 1; // длина маятника
+// const a = 10; // частота осцилляций
+// const w = 50; // частота
+// const t = 10; // время
+
+  const pendulum = {
+    originX: canvas.width / 2,
+    originY: canvas.height / 2,
+    rodLength: 200,
+    counter: 1,
+
+  update: function(k, g, l, a, w, t) {
+      const dt = 0.01;
+      const numSteps = 1000;
+
+      console.log(k, g, l, a, w, t)
+
+      let f = 0.01;
+      let dfdt = 0;
+
+      var i = this.counter
+
+      if (i > ((100 * t) - 2)) {
+          this.counter = 1;
+      }
+      const d2fdt2 = -2 * k * dfdt - (g / l - a * w * w * Math.cos(w * i * dt) / l) * Math.sin(f);
+      dfdt += d2fdt2 * dt;
+      f += dfdt * dt;
+      this.angle = f;
+
+      this.counter += 1;
+  },
+  
+  draw: function() {
+      // Очистка холста
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Вычисление положения маятника
+      const bobX = this.originX + this.rodLength * Math.sin(this.angle);
+      const bobY = (this.originY + this.rodLength * (-Math.cos(this.angle)));
+      console.log(`Value counter ${this.counter}`);
+      console.log(`Value angle ${this.angle}`);
+      console.log(`Value bobX: ${bobX}`);
+      console.log(`Value bobY: ${bobY}`);
+
+      // Рисование стержня маятника
+      ctx.beginPath();
+      ctx.moveTo(this.originX, this.originY);
+      ctx.lineTo(bobX, bobY);
+      ctx.stroke();
+
+      // Рисование груза маятника
+      ctx.beginPath();
+      ctx.arc(bobX, bobY, 10, 0, 2 * Math.PI);
+      ctx.fill();
+    }
+  };
+
+  function animate() {
+    pendulum.update(k, g, l, a, w, t);
+    pendulum.draw();
+   requestAnimationFrame(animate);
+  }
+  animate();
 }
 
 var myChart
@@ -115,7 +176,6 @@ function downloadGraph() {
 }
 
 function addToTable(k, g, l, a, w, t) {
-  console.log("func work")
   // Get the table body
   var tableBody = document.getElementById("tableBody");
   var tableBodyMain = document.getElementById("tableBodyMain");
@@ -129,14 +189,14 @@ function addToTable(k, g, l, a, w, t) {
   addRow(tableBody, "k", k);
   addRow(tableBody, "g", g);
   addRow(tableBody, "L", l);
-  addRow(tableBody, "A", a);
+  addRow(tableBody, "a", a);
   addRow(tableBody, "ω", w);
   addRow(tableBody, "t", t);
 
   addRow(tableBodyMain, "k", k);
   addRow(tableBodyMain, "g", g);
   addRow(tableBodyMain, "L", l);
-  addRow(tableBodyMain, "A", a);
+  addRow(tableBodyMain, "a", a);
   addRow(tableBodyMain, "ω", w);
   addRow(tableBodyMain, "t", t);
   // Add rows for other parameters as needed
@@ -152,72 +212,7 @@ function addRow(tableBody, parameter, value) {
   cellValue.textContent = value;
 }
 
-const canvas = document.getElementById("pendulumCanvas");
-const ctx = canvas.getContext("2d");
 
-// const k = 0.5; // коэффициент трения
-// const g = 9.8; // ускорение свободного падения
-// const l = 1; // длина маятника
-// const a = 10; // частота осцилляций
-// const w = 50; // частота
-// const t = 10; // время
-
-const pendulum = {
-  originX: canvas.width / 2,
-  originY: canvas.height / 2,
-  rodLength: 100,
-  counter: 1,
-
-  update: function(k, g, l, a, w, t) {
-      const dt = 0.01;
-      const numSteps = 1000;
-
-      let f = 0.01;
-      let dfdt = 0;
-
-      var i = this.counter
-
-      if (i > 998) {
-          this.counter = 1;
-      }
-      const d2fdt2 = -2 * k * dfdt - (g / l - a * w * w * Math.cos(w * i * dt) / l) * Math.sin(f);
-      dfdt += d2fdt2 * dt;
-      f += dfdt * dt;
-      this.angle = f;
-
-      this.counter += 1;
-  },
-  
-  draw: function() {
-      // Очистка холста
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Вычисление положения маятника
-      const bobX = this.originX + this.rodLength * Math.sin(this.angle);
-      const bobY = (this.originY + this.rodLength * (-Math.cos(this.angle)));
-      console.log(`Value counter ${this.counter}`);
-      console.log(`Value angle ${this.angle}`);
-      console.log(`Value bobX: ${bobX}`);
-      console.log(`Value bobY: ${bobY}`);
-
-      // Рисование стержня маятника
-      ctx.beginPath();
-      ctx.moveTo(this.originX, this.originY);
-      ctx.lineTo(bobX, bobY);
-      ctx.stroke();
-
-      // Рисование груза маятника
-      ctx.beginPath();
-      ctx.arc(bobX, bobY, 10, 0, 2 * Math.PI);
-      ctx.fill();
-  }
-};
-
-function animate(k, g, l, a, w, t) {
-  pendulum.update(k, g, l, a, w, t);
-  pendulum.draw();
-  requestAnimationFrame(animate);
-}
 
 //animate()
 
