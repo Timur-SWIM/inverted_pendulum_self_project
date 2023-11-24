@@ -82,7 +82,7 @@
                                 <input class="form-control" id="k" type="text" placeholder="Коэффициент k">
                             </div>
                             <div class="col">
-                                <select class="form-select" aria-label="Default select example">
+                                <select class="form-select" id="g" aria-label="Default select example">
                                     <option selected>Уск. св. падения g</option>
                                     <option value="9.8">🌍9.8</option>
                                     <option value="1.6">🌑1.6</option>
@@ -144,8 +144,8 @@
             </div>
             <!-- Modeling -->
             <div class="col-lg ms-md-2 mb-1 rounded bg-body-tertiary">
-                <img src="{% static '/img/Kapitza_pendulum_temp.png' %}" alt="маятник" class="d-block mx-auto" width="140px"
-                    srcset="">
+                <canvas id="pendulumCanvas" width="495" height="495"></canvas>
+
             </div>
         </main>
     </div>
