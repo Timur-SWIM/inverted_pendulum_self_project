@@ -42,7 +42,10 @@
                         Экспорт графика
                     </button>
                     
-                    <div class="fs-3 mt-4 mb-3 mx-2 border-bottom">Графики</div>
+                    <div class="d-flex justify-content-between align-items-end border-bottom p-1 mx-2 mb-3 mt-4">
+                        <div class="fs-3">Графики</div>
+                        <a class="fs-5 link-secondary link-offset-1 link-underline-opacity-25 link-underline-opacity-100-hover" href="#">очистить</a>
+                    </div>
                     <div class="vstack gap-2 mx-2">
                         <div class="card">
                             <img src="{% static '/img/Kapitza_pendulum_temp.png' %}" alt="маятник" class="d-block mx-auto"
@@ -118,13 +121,11 @@
         </div>
     </div>
 
-
-    <!-- Questions -->
     <div class="container-fluid">
         <main class="row px-2">
             <div class="col-lg-7">
                 <!-- Graph -->
-                <div class="row">
+                <div class="row rounded bg-body-tertiary">
                     <canvas id="myChart"></canvas>
                 </div>
                 <!-- Table -->
@@ -155,12 +156,7 @@
 
     <!-- <script>
 
-        const myModal = document.getElementById('modal');
-        const myInput = document.getElementById('myInput');
 
-        myModal.addEventListener('shown.bs.modal', () => {
-            myInput.focus()
-        });
 
     </script> -->
 
