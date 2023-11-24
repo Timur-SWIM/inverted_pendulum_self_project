@@ -41,13 +41,7 @@ function getDataAndPassToScript() {
 
   buildGraph(anglesOfDeflection); 
 
-  //animate(k, g, l, a, w, t);
-  
-  k = parseFloat(k);
-  l = parseFloat(l);
-  a = parseFloat(a);
-  w = parseFloat(w);
-  t = parseFloat(t);
+  animate(k, g, l, a, w, t);
 }
 
 var myChart
@@ -161,12 +155,12 @@ function addRow(tableBody, parameter, value) {
 const canvas = document.getElementById("pendulumCanvas");
 const ctx = canvas.getContext("2d");
 
-const k = 0.5; // коэффициент трения
-const g = 9.8; // ускорение свободного падения
-const l = 1; // длина маятника
-const a = 10; // частота осцилляций
-const w = 50; // частота
-const t = 10; // время
+// const k = 0.5; // коэффициент трения
+// const g = 9.8; // ускорение свободного падения
+// const l = 1; // длина маятника
+// const a = 10; // частота осцилляций
+// const w = 50; // частота
+// const t = 10; // время
 
 const pendulum = {
   originX: canvas.width / 2,
@@ -186,21 +180,11 @@ const pendulum = {
       if (i > 998) {
           this.counter = 1;
       }
-      console.log(g);
       const d2fdt2 = -2 * k * dfdt - (g / l - a * w * w * Math.cos(w * i * dt) / l) * Math.sin(f);
       dfdt += d2fdt2 * dt;
       f += dfdt * dt;
       this.angle = f;
-      //console.log(this.angle)
 
-      // Обновление угловой скорости на основе гравитации
-      //this.angleVelocity += this.gravity * Math.sin(this.angle);
-
-      // Фактор затухания для постепенного уменьшения угловой скорости (для реалистичного движения)
-      //this.angleVelocity *= 0.99;
-
-      // Обновление угла на основе угловой скорости
-      //this.angle += this.angleVelocity;
       this.counter += 1;
   },
   
@@ -211,10 +195,10 @@ const pendulum = {
       // Вычисление положения маятника
       const bobX = this.originX + this.rodLength * Math.sin(this.angle);
       const bobY = (this.originY + this.rodLength * (-Math.cos(this.angle)));
-      //console.log(`Value counter ${this.counter}`);
-      //console.log(`Value angle ${this.angle}`);
-      //console.log(`Value bobX: ${bobX}`);
-      //console.log(`Value bobY: ${bobY}`);
+      console.log(`Value counter ${this.counter}`);
+      console.log(`Value angle ${this.angle}`);
+      console.log(`Value bobX: ${bobX}`);
+      console.log(`Value bobY: ${bobY}`);
 
       // Рисование стержня маятника
       ctx.beginPath();
@@ -229,11 +213,11 @@ const pendulum = {
   }
 };
 
-function animate() {
+function animate(k, g, l, a, w, t) {
   pendulum.update(k, g, l, a, w, t);
   pendulum.draw();
   requestAnimationFrame(animate);
 }
 
-animate()
+//animate()
 
