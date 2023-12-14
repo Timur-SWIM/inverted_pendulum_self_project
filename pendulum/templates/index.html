@@ -38,7 +38,7 @@
                         Новый график
                     </button>
 
-                    <button class="btn bg-body-tertiary mx-2">
+                    <button class="btn bg-body-tertiary mx-2" onclick="downloadGraph()">
                         Экспорт графика
                     </button>
                     
@@ -57,31 +57,8 @@
                                         <th scope="col">Значение</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <th>k</th>
-                                        <td>0.5</td>
-                                    </tr>
-                                    <tr>
-                                        <th>g</th>
-                                        <td>9.8 Н/кг</td>
-                                    </tr>
-                                    <tr>
-                                        <th>L</th>
-                                        <td>1 м</td>
-                                    </tr>
-                                    <tr>
-                                        <th>A</th>
-                                        <td>0.2 м</td>
-                                    </tr>
-                                    <tr>
-                                        <th>ω</th>
-                                        <td>2 с<sup>-1</sup></td>
-                                    </tr>
-                                    <tr>
-                                        <th>t</th>
-                                        <td>10 c</td>
-                                    </tr>
+                                <tbody id="tableBody">
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -105,10 +82,10 @@
                     <form action="">
                         <div class="row mb-3">
                             <div class="col-6 me-1">
-                                <input class="form-control " type="text" placeholder="Коэффициент k">
+                                <input class="form-control" id="k" type="text" placeholder="Коэффициент k">
                             </div>
                             <div class="col">
-                                <select class="form-select" aria-label="Default select example">
+                                <select class="form-select" id="g" aria-label="Default select example">
                                     <option selected>Уск. св. падения g</option>
                                     <option value="9.8">🌍9.8</option>
                                     <option value="1.6">🌑1.6</option>
@@ -119,26 +96,26 @@
 
                         <div class="row mb-3">
                             <div class="col-6 me-1">
-                                <input class="form-control" type="text" placeholder="Длина стержня L">
+                                <input class="form-control" type="text" id="l" placeholder="Длина стержня L">
                             </div>
                             <div class="col">
-                                <input class="form-control" type="text" placeholder="Амплитуда A">
+                                <input class="form-control" type="text" id="a" placeholder="Амплитуда A">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-6 me-1">
-                                <input class="form-control" type="text" placeholder="Угловая частота ω">
+                                <input class="form-control" type="text" id="w" placeholder="Угловая частота ω">
                             </div>
                             <div class="col">
-                                <input class="form-control" type="text" placeholder="Время моделирования t">
+                                <input class="form-control" type="text" id="t" placeholder="Время моделирования t">
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                    <button type="button" class="btn btn-primary">Построить</button>
+                    <button type="button" class="btn btn-primary" onclick="getDataAndPassToScript()">Построить</button>
                 </div>
             </div>
         </div>
@@ -160,51 +137,22 @@
                                 <th scope="col">Значение</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <th>k</th>
-                                <td>0.5</td>
-                            </tr>
-                            <tr>
-                                <th>g</th>
-                                <td>9.8 Н/кг</td>
-                            </tr>
-                            <tr>
-                                <th>L</th>
-                                <td>1 м</td>
-                            </tr>
-                            <tr>
-                                <th>A</th>
-                                <td>0.2 м</td>
-                            </tr>
-                            <tr>
-                                <th>ω</th>
-                                <td>2 с<sup>-1</sup></td>
-                            </tr>
-                            <tr>
-                                <th>t</th>
-                                <td>10 c</td>
-                            </tr>
+                        <tbody id="tableBodyMain">
+                            
                         </tbody>
                     </table>
                 </div>
             </div>
             <!-- Modeling -->
             <div class="col-lg ms-md-2 mb-1 rounded bg-body-tertiary">
-                <img src="{% static '/img/Kapitza_pendulum_temp.png' %}" alt="маятник" class="d-block mx-auto" width="140px"
-                    srcset="">
+                <canvas id="pendulumCanvas" width="550" height="700"></canvas>
+
             </div>
         </main>
     </div>
 
     <!-- Graph script -->
     <script src="{% static '/js/scripts.js' %}"></script>
-
-    <script>
-
-
-
-    </script>
 
 </body>
 
