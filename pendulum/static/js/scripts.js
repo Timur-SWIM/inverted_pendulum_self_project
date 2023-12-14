@@ -37,13 +37,6 @@ function getDataAndPassToScript() {
   const canvas = document.getElementById("pendulumCanvas");
   const ctx = canvas.getContext("2d");
 
-// const k = 0.5; // коэффициент трения
-// const g = 9.8; // ускорение свободного падения
-// const l = 1; // длина маятника
-// const a = 0.2; // частота осцилляций
-// const w = 50; // частота
-// const t = 10; // время
-
   const pendulum = {
     originX: canvas.width / 2,
     originY: canvas.height / 2,
@@ -64,15 +57,13 @@ function getDataAndPassToScript() {
       if (i > ((100 * t) - 2)) {
           this.counter = 1;
       }
-      // const d2fdt2 = -2 * k * dfdt - (g / l - a * w * w * Math.cos(w * i * dt) / l) * Math.sin(f);
-      // dfdt += d2fdt2 * dt;
-      // f += dfdt * dt;
+  
       this.angle = anglesOfDeflection[i] * 100;
-      // Add vertical motion to the pivot point
-      const verticalAmplitude = a * 20; // Adjust the amplitude of the vertical motion
-      const verticalFrequency = w; // Adjust the frequency of the vertical motion
-      this.originY = canvas.height / 2 + verticalAmplitude * Math.sin(verticalFrequency * i * dt);
 
+      // Добавьте вертикальное перемещение к точке поворота
+      const verticalAmplitude = a * 20; // Отрегулируйте амплитуду вертикального движения
+      const verticalFrequency = w; // Отрегулируйте частоту вертикального перемещения
+      this.originY = canvas.height / 2 + verticalAmplitude * Math.sin(verticalFrequency * i * dt);
 
       this.counter += 1;
   },
@@ -84,7 +75,6 @@ function getDataAndPassToScript() {
       // Set the color to red
       ctx.fillStyle = "red";
       ctx.strokeStyle = "red";
-
 
       // Вычисление положения маятника
       const bobX = this.originX + this.rodLength * Math.sin(this.angle);
@@ -163,7 +153,6 @@ function downloadGraph() {
       alert('Пожалуйста, постройте график перед загрузкой.');
       return;
   }
-
   // Получение элемента canvas
   var canvas = document.getElementById('myChart');
 
@@ -186,16 +175,15 @@ function downloadGraph() {
 }
 
 function addToTable(k, g, l, a, w, t) {
-  // Get the table body
+  // Получаем тело таблицы
   var tableBody = document.getElementById("tableBody");
   var tableBodyMain = document.getElementById("tableBodyMain");
   
-
-  // Clear existing rows in the table body
+  // Очистите существующие строки в теле таблицы
   tableBody.innerHTML = "";
   tableBodyMain.innerHTML = "";
 
-  // Add new rows to the table body with user-entered values
+  // Добавьте новые строки в тело таблицы с введенными пользователем значениями
   addRow(tableBody, "k", k);
   addRow(tableBody, "g", g);
   addRow(tableBody, "L", l);
@@ -209,9 +197,8 @@ function addToTable(k, g, l, a, w, t) {
   addRow(tableBodyMain, "a", a);
   addRow(tableBodyMain, "ω", w);
   addRow(tableBodyMain, "t", t);
-  // Add rows for other parameters as needed
 }
-// Function to add a row to the table
+// Функция для добавления строки в таблицу
 function addRow(tableBody, parameter, value) {
   var newRow = tableBody.insertRow(tableBody.rows.length);
   
@@ -221,6 +208,3 @@ function addRow(tableBody, parameter, value) {
   var cellValue = newRow.insertCell(1);
   cellValue.textContent = value;
 }
-
-
-//animate()
