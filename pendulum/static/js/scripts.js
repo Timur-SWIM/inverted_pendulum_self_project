@@ -15,7 +15,7 @@ function solveEquation(k, g, l, a, w, t) {
     angles.push(f);
   }
 
-  return angles.reverse();
+  return angles;
 }
 
 function getDataAndPassToScript() {
@@ -40,7 +40,7 @@ function getDataAndPassToScript() {
 // const k = 0.5; // коэффициент трения
 // const g = 9.8; // ускорение свободного падения
 // const l = 1; // длина маятника
-// const a = 10; // частота осцилляций
+// const a = 0.2; // частота осцилляций
 // const w = 50; // частота
 // const t = 10; // время
 
@@ -64,10 +64,15 @@ function getDataAndPassToScript() {
       if (i > ((100 * t) - 2)) {
           this.counter = 1;
       }
-      const d2fdt2 = -2 * k * dfdt - (g / l - a * w * w * Math.cos(w * i * dt) / l) * Math.sin(f);
-      dfdt += d2fdt2 * dt;
-      f += dfdt * dt;
-      this.angle = f;
+      // const d2fdt2 = -2 * k * dfdt - (g / l - a * w * w * Math.cos(w * i * dt) / l) * Math.sin(f);
+      // dfdt += d2fdt2 * dt;
+      // f += dfdt * dt;
+      this.angle = anglesOfDeflection[i] * 100;
+      // Add vertical motion to the pivot point
+      const verticalAmplitude = a * 20; // Adjust the amplitude of the vertical motion
+      const verticalFrequency = w; // Adjust the frequency of the vertical motion
+      this.originY = canvas.height / 2 + verticalAmplitude * Math.sin(verticalFrequency * i * dt);
+
 
       this.counter += 1;
   },
@@ -75,6 +80,11 @@ function getDataAndPassToScript() {
   draw: function() {
       // Очистка холста
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Set the color to red
+      ctx.fillStyle = "red";
+      ctx.strokeStyle = "red";
+
 
       // Вычисление положения маятника
       const bobX = this.originX + this.rodLength * Math.sin(this.angle);
@@ -213,6 +223,4 @@ function addRow(tableBody, parameter, value) {
 }
 
 
-
 //animate()
-
